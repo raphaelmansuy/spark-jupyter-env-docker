@@ -19,9 +19,9 @@ This project helps you to create a local stack with
 
 ### Based on:
 
-* [Almond](https://almond.sh/) A Scala Kernel for Jupiter
-* [Jupiterlab](https://jupyter.org/) Jupiter Lab
-* [Spark](https://spark.apache.org/) Spark
+* [Almond](https://almond.sh/) A Scala Kernel for Jupiter 🥜
+* [Jupiterlab](https://jupyter.org/) Jupiter Lab 🪐
+* [Spark](https://spark.apache.org/) Spark ⚡️
 
 ## How to start
 
