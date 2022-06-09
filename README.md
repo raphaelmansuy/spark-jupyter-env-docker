@@ -1,10 +1,5 @@
 # A docker-compose with scala and spark and jupiterlab
 
-Created Time: June 9, 2022 9:00 AM
-Last edited Time: June 9, 2022 5:43 PM
-Publisher: Raphael MANSUY
-Tags: docker-compose, scala, spark
-
 ### This recipes help you create a local dev environment for Scala, Spark and Jupyter notebook
 
 This project helps you to create a local stack with
@@ -62,3 +57,5 @@ The stack is running 🎉 🚀
     - Open [http://localhost:8080](http://localhost:8080)
     
     ![Spark UI](A%20docker-compose%20with%20scala%20and%20spark%20cdedadd6899b4d0d93571de9cf27eecb/Untitled%202.png)
+    
+    Voilà 🚀
