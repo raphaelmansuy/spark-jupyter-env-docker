@@ -1,4 +1,4 @@
-# A docker-compose with scala and spark
+# A docker-compose with scala and spark and jupiterlab
 
 Created Time: June 9, 2022 9:00 AM
 Last edited Time: June 9, 2022 5:43 PM
