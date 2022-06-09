@@ -18,11 +18,11 @@ This project helps you to create a local stack with
     - R
 - Postgres
 
-![Untitled](A%20docker-compose%20with%20scala%20and%20spark%20cdedadd6899b4d0d93571de9cf27eecb/Untitled.png)
+![Architecture](A%20docker-compose%20with%20scala%20and%20spark%20cdedadd6899b4d0d93571de9cf27eecb/Untitled.png)
 
-[Architecture](https://excalidraw.com/#room=89d7b8ce88bd1dc8fbdc,jJoaMBfsQHDcqN9P2KLGyw)
+[Architecture Excalidraw](https://excalidraw.com/#room=89d7b8ce88bd1dc8fbdc,jJoaMBfsQHDcqN9P2KLGyw)
 
-Architecture
+
 
 ## How to start
 
