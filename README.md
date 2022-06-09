@@ -17,7 +17,7 @@ This project helps you to create a local stack with
 
 [Architecture Excalidraw](https://excalidraw.com/#room=89d7b8ce88bd1dc8fbdc,jJoaMBfsQHDcqN9P2KLGyw)
 
-Based on:
+### Based on:
 
 [Almond](https://almond.sh/) A Scala Kernel for Jupiter
 
