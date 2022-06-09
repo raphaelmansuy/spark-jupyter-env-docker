@@ -49,16 +49,17 @@ cd spark-jupyter-env-docker
 docker-compose up --build
 ```
 
-The stack is running 🎉 🚀
+### The stack is running 🎉 🚀
 
-- Open Jupiterlab
+#### Open Jupiterlab
     
     open [http://localhost:8888](http://localhost:8888)
     
     ![Jupiterlab](A%20docker-compose%20with%20scala%20and%20spark%20cdedadd6899b4d0d93571de9cf27eecb/Untitled%201.png)
     
-- Open SparkUI
-    - Open [http://localhost:8080](http://localhost:8080)
+#### Open SparkUI
+
+    Open [http://localhost:8080](http://localhost:8080)
     
     ![Spark UI](A%20docker-compose%20with%20scala%20and%20spark%20cdedadd6899b4d0d93571de9cf27eecb/Untitled%202.png)
     
