@@ -51,7 +51,7 @@ Docker compose file
 docker-compose up --build
 ```
 
-The sack is running 🎉 🚀
+The stack is running 🎉 🚀
 
 - Open Jupiterlab
     
