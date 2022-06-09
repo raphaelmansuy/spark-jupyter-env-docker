@@ -52,6 +52,11 @@ function cleanContainers() {
     docker stop "${container}"
     docker rm "${container}"
 
+    container="$(docker ps -a | grep 'postgres' | awk '{print $1}')"
+    docker stop "${container}"
+    docker rm "${container}"
+
+
 }
 
 function cleanImages() {
@@ -73,10 +78,13 @@ function cleanImages() {
       docker rmi -f "$(docker images | grep -m 1 'base' | awk '{print $3}')"
     fi
 
+     docker rmi -f "$(docker images | grep -m 1 'postgres' | awk '{print $3}')"
+
 }
 
 function cleanVolume() {
   docker volume rm "hadoop-distributed-file-system"
+  docker volume rm "db"
 }
 
 function buildImages() {
@@ -125,6 +133,12 @@ function buildImages() {
       -f docker/jupyterlab/Dockerfile \
       -t jupyterlab:${JUPYTERLAB_VERSION}-spark-${SPARK_VERSION} .
   fi
+
+
+     docker build \
+      --build-arg build_date="${BUILD_DATE}" \
+      -f docker/postgres/Dockerfile \
+      -t postgres .
 
 }
 
