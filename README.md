@@ -1,21 +1,65 @@
-# spark-jupyter-env-docker
-A spark jupyter notebok environment with scala, python and R kernel (work on MAC M1)
+# A docker-compose with scala and spark
 
-## Building the stack
+Created Time: June 9, 2022 9:00 AM
+Last edited Time: June 9, 2022 5:43 PM
+Publisher: Raphael MANSUY
+Tags: docker-compose, scala, spark
+
+### This recipes help you create a local dev environment for Scala, Spark and Jupyter notebook
+
+This project helps you to create a local stack with
+
+- Spark
+    - 1 master node
+    - 2 worker
+- Jupyterlab
+    - Python
+    - Scala
+    - R
+- Postgres
+
+![Untitled](A%20docker-compose%20with%20scala%20and%20spark%20cdedadd6899b4d0d93571de9cf27eecb/Untitled.png)
+
+[Architecture](https://excalidraw.com/#room=89d7b8ce88bd1dc8fbdc,jJoaMBfsQHDcqN9P2KLGyw)
+
+Architecture
+
+## How to start
+
+Clone the repository
+
+```bash
+git clone https://github.com/raphaelmansuy/spark-jupyter-env-docker
+```
+
+Enter the project directory
+
+```bash
+cd spark-jupyter-env-docker
+Docker compose file
+```
+
+## Build the images
 
 ```bash
 ./build.sh
 ```
 
-## Running the stack
+## Start the stack
 
 ```bash
-docker-compose up --build 
+docker-compose up --build
 ```
 
-## Deleting the stack 
+The sack is running 🎉 🚀
 
-
-```bash
-docker-compose down --volumes
-```
+- Open Jupiterlab
+    
+    open [http://localhost:8888](http://localhost:8888)
+    
+    ![Untitled](A%20docker-compose%20with%20scala%20and%20spark%20cdedadd6899b4d0d93571de9cf27eecb/Untitled%201.png)
+    
+- Open SparkUP
+    - Open [http://localhost:8080](http://localhost:8080)
+    
+    ![Untitled](A%20docker-compose%20with%20scala%20and%20spark%20cdedadd6899b4d0d93571de9cf27eecb/Untitled%202.png)
