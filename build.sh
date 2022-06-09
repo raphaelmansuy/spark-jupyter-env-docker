@@ -29,8 +29,11 @@ SHOULD_BUILD_SPARK="true"
 function cleanContainers() {
 
     container="$(docker ps -a | grep 'jupyterlab' | awk '{print $1}')"
-    docker stop "${container}"
-    docker rm "${container}"
+    if [ -z "${container}" ];
+    then
+      docker stop "${container}"
+      docker rm "${container}"
+    fi
 
     container="$(docker ps -a | grep 'spark-worker' -m 1 | awk '{print $1}')"
     while [ -n "${container}" ];
@@ -41,22 +44,32 @@ function cleanContainers() {
     done
 
     container="$(docker ps -a | grep 'spark-master' | awk '{print $1}')"
-    docker stop "${container}"
-    docker rm "${container}"
+    if [ -z "${container}" ];
+    then
+      docker stop "${container}"
+      docker rm "${container}"
+    fi 
 
     container="$(docker ps -a | grep 'spark-base' | awk '{print $1}')"
-    docker stop "${container}"
-    docker rm "${container}"
+    if [ -z "${container}" ];
+    then
+      docker stop "${container}"
+      docker rm "${container}"
+    fi
 
     container="$(docker ps -a | grep 'base' | awk '{print $1}')"
-    docker stop "${container}"
-    docker rm "${container}"
+    if [ -z "${container}" ];
+    then
+      docker stop "${container}"
+      docker rm "${container}"
+    fi 
 
     container="$(docker ps -a | grep 'postgres' | awk '{print $1}')"
-    docker stop "${container}"
-    docker rm "${container}"
-
-
+    if [ -z "${container}" ];
+    then
+      docker stop "${container}"
+      docker rm "${container}"
+    fi
 }
 
 function cleanImages() {

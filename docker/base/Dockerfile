@@ -30,6 +30,10 @@ ENV SCALA_HOME="/usr/bin/scala"
 ENV PATH=${PATH}:${SCALA_HOME}/bin
 ENV SHARED_WORKSPACE=${shared_workspace}
 
+RUN mkdir -p /libs 
+RUN curl -L -o /libs/postgresql-43.2.6.jar  https://jdbc.postgresql.org/download/postgresql-43.2.6.jar
+ENV CLASSPATH=/libs/postgresql-43.2.6.jar:${CLASSPATH}
+
 # -- Runtime
 
 VOLUME ${shared_workspace}
