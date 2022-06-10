@@ -1,5 +1,7 @@
 # A docker-compose with scala and spark and jupiterlab
 
+[![CodeFactor](https://www.codefactor.io/repository/github/raphaelmansuy/spark-jupyter-env-docker/badge)](https://www.codefactor.io/repository/github/raphaelmansuy/spark-jupyter-env-docker)
+
 ## A local dev environment for Scala, Spark, Jupyter notebook, vault, postgres and minio
 
 Created with ❤️
