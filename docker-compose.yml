@@ -23,7 +23,7 @@ services:
       - 8888:8888
       - 4040:4040
     volumes:
-      - shared-workspace:/opt/workspace
+      - ./workspace:/opt/workspace
 # Spark      
   spark-master:
     image: spark-master:3.0.0
@@ -33,7 +33,7 @@ services:
       - 8080:8080
       - 7077:7077
     volumes:
-      - shared-workspace:/opt/workspace
+      - ./workspace:/opt/workspace
   spark-worker-1:
     image: spark-worker:3.0.0
     restart: always
@@ -44,7 +44,7 @@ services:
     ports:
       - 8081:8081
     volumes:
-      - shared-workspace:/opt/workspace
+      - ./workspace:/opt/workspace
     depends_on:
       - spark-master
   spark-worker-2:
@@ -57,7 +57,7 @@ services:
     ports:
       - 8082:8081
     volumes:
-      - shared-workspace:/opt/workspace
+      - ./workspace:/opt/workspace
     depends_on:
       - spark-master
 # Postgres database      
@@ -75,7 +75,7 @@ services:
       - "5432:5432"
     volumes:
       - db:/var/lib/postgresql/data
-      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./sample_db/sample_db.sql:/docker-entrypoint-initdb.d/init.sql
 # Minio an S3 compatible object store      
   minio:
     image: minio/minio:RELEASE.2022-06-07T00-33-41Z
@@ -141,4 +141,3 @@ services:
       curl --header "X-Vault-Token: myroot" --request POST --data "{\"user\":\"docker\",\"password\":\"docker\"}" http://vault:8200/v1/secret-decat/datafactory/test/test/test_database/FR;
       curl --header "X-Vault-Token: myroot" --request POST --data "{\"login\":\"docker\",\"password\":\"docker\"}" http://vault:8200/v1/secret-decat/datafactory/rds/datafactory-local/datafactory-job;
       '      
-      
