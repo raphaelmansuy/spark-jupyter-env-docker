@@ -14,105 +14,81 @@ HADOOP_VERSION="3.2"
 SCALA_VERSION="2.12.10"
 SCALA_KERNEL_VERSION="0.10.9"
 
-SHOULD_BUILD_BASE="true"
-SHOULD_BUILD_JUPYTERLAB="true"
-SHOULD_BUILD_SPARK="true"
+POSTGRES_VERSION="13.0"
 
-SHOULD_BUILD_BASE="true"
-SHOULD_BUILD_JUPYTERLAB="true"
-SHOULD_BUILD_SPARK="true"
 
 # ----------------------------------------------------------------------------------------------------------------------
 # -- Functions----------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
 
-function cleanContainers() {
 
-    container="$(docker ps -a | grep 'jupyterlab' | awk '{print $1}')"
-    if [ -z "${container}" ];
-    then
-      docker stop "${container}"
-      docker rm "${container}"
-    fi
 
-    container="$(docker ps -a | grep 'spark-worker' -m 1 | awk '{print $1}')"
-    while [ -n "${container}" ];
-    do
-      docker stop "${container}"
-      docker rm "${container}"
-      container="$(docker ps -a | grep 'spark-worker' -m 1 | awk '{print $1}')"
-    done
-
-    container="$(docker ps -a | grep 'spark-master' | awk '{print $1}')"
-    if [ -z "${container}" ];
-    then
-      docker stop "${container}"
-      docker rm "${container}"
-    fi 
-
-    container="$(docker ps -a | grep 'spark-base' | awk '{print $1}')"
-    if [ -z "${container}" ];
-    then
-      docker stop "${container}"
-      docker rm "${container}"
-    fi
-
-    container="$(docker ps -a | grep 'base' | awk '{print $1}')"
-    if [ -z "${container}" ];
-    then
-      docker stop "${container}"
-      docker rm "${container}"
-    fi 
-
-    container="$(docker ps -a | grep 'postgres' | awk '{print $1}')"
-    if [ -z "${container}" ];
-    then
-      docker stop "${container}"
-      docker rm "${container}"
-    fi
+function cleanContainer() {
+  containerName=$1
+  container=$(docker ps -a | grep ${containerName} -m 1 | awk '{print $1}')
+  while [ -n "${container}" ];
+  do
+    echo "👉 cleaning container ${containerName}"
+    docker stop "${container}"
+    docker rm "${container}"
+    echo " ✅ container ${containerName} stopped and deleted"
+    container=$(docker ps -a | grep ${containerName} -m 1 | awk '{print $1}')
+  done 
 }
 
-function cleanImages() {
-
-    if [[ "${SHOULD_BUILD_JUPYTERLAB}" == "true" ]]
-    then
-      docker rmi -f "$(docker images | grep -m 1 'jupyterlab' | awk '{print $3}')"
-    fi
-
-    if [[ "${SHOULD_BUILD_SPARK}" == "true" ]]
-    then
-      docker rmi -f "$(docker images | grep -m 1 'spark-worker' | awk '{print $3}')"
-      docker rmi -f "$(docker images | grep -m 1 'spark-master' | awk '{print $3}')"
-      docker rmi -f "$(docker images | grep -m 1 'spark-base' | awk '{print $3}')"
-    fi
-
-    if [[ "${SHOULD_BUILD_BASE}" == "true" ]]
-    then
-      docker rmi -f "$(docker images | grep -m 1 'base' | awk '{print $3}')"
-    fi
-
-     docker rmi -f "$(docker images | grep -m 1 'postgres' | awk '{print $3}')"
-
+function cleanImage() {
+  imageName=$1
+  image=$(docker images -a | grep ${imageName} -m 1 | awk '{print $3}')
+  while [ -n "${image}" ];
+  do
+    echo "👉 cleaning image ${imageName}"
+    docker rmi -f "${image}"
+    echo " ✅ image ${imageName} deleted"
+    image=$(docker images -a | grep ${imageName} -m 1 | awk '{print $3}')
+  done 
 }
 
 function cleanVolume() {
-  docker volume rm "hadoop-distributed-file-system"
-  docker volume rm "db"
+  volumeName=$1
+  volume=$(docker volume ls | grep ${volumeName} -m 1 | awk '{print $2}')
+  echo "👉 deleting volume $volumeName"
+  while [ -n "${volume}" ];
+  do 
+    docker volume rm "${volume}"
+    echo " ✅ volume ${volume} deleted"
+    volume=$(docker volume ls | grep ${volume} -m 1 | awk '{print $2}')
+  done 
+}
+
+function cleanImages() {
+  for i in jupyterlab spark-worker spark-master spark-base base postgres minio-srv dremio
+  do
+    cleanImage $i
+  done
+}
+
+function cleanContainers() {
+  for i in jupyterlab spark-worker spark-master spark-base base postgres minio-srv dremio
+  do
+    cleanContainer $i
+  done
+}
+
+
+function cleanVolumes() {
+  for i in hadoop-distributed-file-system db minio_data
+  do
+    cleanVolume $i
+  done 
 }
 
 function buildImages() {
 
-  if [[ "${SHOULD_BUILD_BASE}" == "true" ]]
-  then
     docker build \
       --build-arg build_date="${BUILD_DATE}" \
       --build-arg scala_version="${SCALA_VERSION}" \
       -f docker/base/Dockerfile \
       -t base:latest .
-  fi
-
-  if [[ "${SHOULD_BUILD_SPARK}" == "true" ]]
-  then
 
     docker build \
       --build-arg build_date="${BUILD_DATE}" \
@@ -133,10 +109,6 @@ function buildImages() {
       -f docker/spark-worker/Dockerfile \
       -t spark-worker:${SPARK_VERSION} .
 
-  fi
-
-  if [[ "${SHOULD_BUILD_JUPYTERLAB}" == "true" ]]
-  then
     docker build \
       --build-arg build_date="${BUILD_DATE}" \
       --build-arg scala_version="${SCALA_VERSION}" \
@@ -145,21 +117,42 @@ function buildImages() {
       --build-arg scala_kernel_version="${SCALA_KERNEL_VERSION}" \
       -f docker/jupyterlab/Dockerfile \
       -t jupyterlab:${JUPYTERLAB_VERSION}-spark-${SPARK_VERSION} .
-  fi
 
 
      docker build \
       --build-arg build_date="${BUILD_DATE}" \
+      --build-arg postgres_version="${POSTGRES_VERSION}" \
       -f docker/postgres/Dockerfile \
       -t postgres .
 
+     docker build \
+      --build-arg build_date="${BUILD_DATE}" \
+      -f docker/dremio/Dockerfile \
+      -t dremio .
+
+
+}
+
+banner() {
+  echo "💫 ELITIZON Spark Stack ...."
+  echo "🤘 Let's build a Wonderfull Big Data Stack ...."
+  echo "-----------------------------------------------"
+}
+
+footer() {
+  echo "✅ Done "
+  echo "👉 To start the stack type : docker-compose up --build"
+  echo "💣 To delete the stack type: docker-compose down --volumes"
+  echo "👋 Bye, see you soon 🎉"
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
 # -- Main --------------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
 
+banner;
 cleanContainers;
 cleanImages;
-cleanVolume;
+cleanVolumes;
 buildImages;
+footer;
