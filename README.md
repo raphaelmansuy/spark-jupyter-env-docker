@@ -1,8 +1,10 @@
 # A docker-compose with scala and spark and jupiterlab
 
-### This recipes helps you create a local dev environment for Scala, Spark and Jupyter notebook
+## A local dev environment for Scala, Spark, Jupyter notebook, vault, postgres and minio
 
-This project helps you to create a local stack with
+Created with ❤️
+
+### This project helps you to create a big data stack with
 
 - Spark
   - 1 master node
@@ -13,15 +15,24 @@ This project helps you to create a local stack with
   - R
 - Postgres
 
+
+#### Logical architecture
+
 ![Architecture](documentation/architecture.svg)
 
-[Excalidraw](https://excalidraw.com/#room=89d7b8ce88bd1dc8fbdc,jJoaMBfsQHDcqN9P2KLGyw)
+
+#### Detailed architecture
+
+![Detailed architecture](documentation/docker-compose.png)
+
 
 ### Based on
 
-- [Almond](https://almond.sh/) A Scala Kernel for Jupiter 🥜
+- [Almond](https://almond.sh/) A Scala Kernel for Jupiter 🧠
 - [Jupiterlab](https://jupyter.org/) Jupiter Lab 🪐
 - [Spark](https://spark.apache.org/) Spark ⚡️
+- [Minio](https://min.io/) Minio S3 compatble object storage  🏪
+- [Hashicorp Vault](https://www.vaultproject.io/) A secret manager   🔐
 
 ## How to start
 
@@ -75,6 +86,8 @@ Open [http://127.0.0.1:8200](http://127.0.0.1:8200/)
 🔐 token myrootid
 
 ### To delete the stack and destroy volumes
+
+ 💣 This instruction delete all the containers and their volumes
 
 ```bash
 docker-compose down --volumes

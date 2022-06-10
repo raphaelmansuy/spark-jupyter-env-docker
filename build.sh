@@ -61,14 +61,14 @@ function cleanVolume() {
 }
 
 function cleanImages() {
-  for i in jupyterlab spark-worker spark-master spark-base base postgres minio-srv dremio
+  for i in jupyterlab spark-worker spark-master spark-base base postgres minio-srv
   do
     cleanImage $i
   done
 }
 
 function cleanContainers() {
-  for i in jupyterlab spark-worker spark-master spark-base base postgres minio-srv dremio
+  for i in jupyterlab spark-worker spark-master spark-base base postgres minio-srv
   do
     cleanContainer $i
   done

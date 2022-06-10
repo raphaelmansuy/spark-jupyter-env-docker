@@ -13,9 +13,6 @@ volumes:
   minio_data:
     name: "minio_data"
     driver: local
-  dremio_data:
-    name: "dremio_data"
-    driver: local
 services:
 # Jupyer lab
   jupyterlab:
@@ -144,17 +141,4 @@ services:
       curl --header "X-Vault-Token: myroot" --request POST --data "{\"user\":\"docker\",\"password\":\"docker\"}" http://vault:8200/v1/secret-decat/datafactory/test/test/test_database/FR;
       curl --header "X-Vault-Token: myroot" --request POST --data "{\"login\":\"docker\",\"password\":\"docker\"}" http://vault:8200/v1/secret-decat/datafactory/rds/datafactory-local/datafactory-job;
       '      
-# Dremio Data exploration
-#  dremio:
-#    image: dremio
-#    hostname: dremio
-#    volumes:
-#      - dremio_data:/var/lib/dremio
-#    links:
-#      - "minio"
-#      - "postgres"
-#    ports:
-#      - "9047:9047"   # UI (HTTP)
-#      - "31010:31010" # ODBC/JDBC clients
-#      - "2181:2181"   # ZooKeeper
-#      - "45678:45678" # Inter-node communicatio
+      
