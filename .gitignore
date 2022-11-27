@@ -3,3 +3,5 @@
 .DS_Store
 .cache
 .ipynb_checkpoints
+# ignore all files in the directory ./workspace/data/mydata
+workspace/data/mydata/*
