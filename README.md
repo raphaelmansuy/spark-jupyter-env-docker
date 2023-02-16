@@ -1,4 +1,4 @@
-# A docker-compose with scala and spark and jupiterlab
+# A docker-compose with scala, python and spark and jupiterlab
 
 [![CodeFactor](https://www.codefactor.io/repository/github/raphaelmansuy/spark-jupyter-env-docker/badge)](https://www.codefactor.io/repository/github/raphaelmansuy/spark-jupyter-env-docker)
 
